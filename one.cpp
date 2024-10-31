@@ -3,6 +3,7 @@
 #include <vector>
 #include <numeric>
 #include <map>
+#include <iomanip>
 
 // -------------------- Chapter 1 info...
 struct CarInfo1
@@ -211,8 +212,51 @@ void chapter6()
     {
         std::cout << "city: " << city << "  population: " << population << std::endl;
     }
+
 }
-// -------------------- Chapter 2 info end...
+
+    // interesting new thing in C++17. Assume this were a header file (.h)
+    //You used to be required to declare it in an h, and then instantiate in
+    // a cpp so that you only had 1 of it. inline takes care of that.
+    class MyType
+    {
+    public:
+        MyType() = default;
+        virtual ~MyType() = default;
+
+        inline static const int ImportantValue{42};
+    };
+
+    // works for globals too
+    inline constexpr int gMyVal{10};
+    inline const std::string gH{"Hello Global World"};
+// -------------------- Chapter 6 info end...
+
+// Return type trick
+// His other book on CPPLambda implies that just "auto" would have been enough here
+decltype(auto) misctypesFunc()
+{
+    return 100.03;
+}
+
+void misctypes()
+{
+    std::cout << "misctypes" << std::endl;
+    int x = 10;
+    decltype(x) y = 20;
+    std::cout << "x: " << x << "  y: " << y << std::endl;
+    decltype((x)) z = x;    // int&
+    std::cout << "after int& decltype x: " << x << "  z: " << z << std::endl;
+    z = 30;
+    std::cout << "after mod z x: " << x << "  z: " << z << std::endl;
+
+    // This tidbit came from CPP Move
+    decltype(auto) xx{x};
+    std::cout << "auto xx: " << xx << "  x: " << x << std::endl;
+
+    auto mfVal{misctypesFunc()};
+    std::cout << "misctypesFunc return: " << /*std::fixed << std::setprecision(3) << */ mfVal << std::endl;
+}
 
 int main()
 {
@@ -220,6 +264,8 @@ int main()
     std::cout << std::endl;
     chapter2();
     chapter6();
+
+    misctypes();
 
     return 0;
 }
