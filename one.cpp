@@ -192,6 +192,25 @@ void chapter6()
     {
         std::cout << "elem string: " << elem.first << "  address: " << &elem.first << std::endl;
     }
+
+    // Lvalue - an expression representing an object with a persistent memory address.
+    // xvalue - an expression thta represents a temporary object, such as the return of a function
+    // that returns by value or an object that's about to be moved.
+    // prvalue - an expression whose evaluation initializes an object o a bit-field, or computes
+    // the value of theoperandof an operator.
+
+    std::string h{"Hello"}; // h is an lvalue
+    //static_cast<int&&>(h); // xvalue
+    int x = 5 + 6; // 5 + 6 is a prvalue
+    int y = 42; // y is an lvalue, 42 is a prvalue
+
+    // Binding to traverse a map....
+    // The trick below can be applied to other data structures.
+    const std::map<std::string, int> mapCityPopulation{ {"Beijing", 21'707'000}, {"London", 8'787'892}, {"New York", 8'622'698}};
+    for(const auto&[city, population] : mapCityPopulation)
+    {
+        std::cout << "city: " << city << "  population: " << population << std::endl;
+    }
 }
 // -------------------- Chapter 2 info end...
 
